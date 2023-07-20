@@ -1,6 +1,5 @@
 format PE DLL
 include 'win32a.inc'
-
 entry DllMain
  
 section '.data' data readable writeable
@@ -37,8 +36,7 @@ proc StartRoutine
 endp
  
 section '.idata' import data readable
-library user32, 'user32.dll',\
-        kernel32, 'kernel32.dll'
+library kernel32, 'kernel32.dll'
 
 import kernel32,\
        sleep, 'Sleep',\
