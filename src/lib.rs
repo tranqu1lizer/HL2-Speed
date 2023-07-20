@@ -7,7 +7,7 @@ use std::ptr::null_mut as NULL;
 static mut aGetLocalPlayer: DWORD = 0;
 const m_flMaxspeed: u32 = 0xDAC;
 
-#[allow(unreachable_code, non_snake_case)] unsafe extern "system" fn StartRoutine(__: *mut winapi::ctypes::c_void) -> DWORD {
+unsafe extern "system" fn StartRoutine(__: *mut winapi::ctypes::c_void) -> DWORD {
     loop {
         let mut pLocalPlayer: DWORD = 0;
 
@@ -19,7 +19,7 @@ const m_flMaxspeed: u32 = 0xDAC;
             out(reg) pLocalPlayer,
         );
 
-        if pLocalPlayer != 0 && pLocalPlayer != 0xcccccccc {
+        if pLocalPlayer != 0 {
 
             *((pLocalPlayer + m_flMaxspeed) as *mut f32) = 7777f32;
         }
@@ -29,7 +29,6 @@ const m_flMaxspeed: u32 = 0xDAC;
     return 0;
 }
 
-#[allow(non_snake_case, unused_variables)]
 #[no_mangle]
 pub extern "system" fn DllMain(instance: HINSTANCE, reason: DWORD, _reserved: LPVOID) -> BOOL {
     if reason == DLL_PROCESS_ATTACH {
