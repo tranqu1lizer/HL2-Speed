@@ -1,6 +1,6 @@
 use winapi::{
     shared::minwindef::{BOOL, DWORD, HINSTANCE, LPVOID, TRUE},
-    um::{winnt::{DLL_PROCESS_ATTACH}, winuser::{MessageBoxA, MB_OK}, libloaderapi::GetModuleHandleA, processthreadsapi::CreateThread}
+    um::{libloaderapi::GetModuleHandleA, processthreadsapi::CreateThread}
 };
 use std::ptr::null_mut as NULL;
 
@@ -31,7 +31,7 @@ unsafe extern "system" fn StartRoutine(__: *mut winapi::ctypes::c_void) -> DWORD
 
 #[no_mangle]
 pub extern "system" fn DllMain(instance: HINSTANCE, reason: DWORD, _reserved: LPVOID) -> BOOL {
-    if reason == DLL_PROCESS_ATTACH {
+    if reason == 0x1 {
         unsafe {
             aGetLocalPlayer = GetModuleHandleA( b"server.dll\0".as_ptr().cast() ) as DWORD + 0x26D5F0;
 
