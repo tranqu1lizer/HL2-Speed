@@ -1,6 +1,6 @@
 format PE DLL
 include 'win32a.inc'
-include 'macro/if.inc'
+
 entry DllMain
  
 section '.data' data readable writeable
