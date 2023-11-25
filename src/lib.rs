@@ -19,25 +19,19 @@ unsafe extern "system" fn StartRoutine(__: *mut winapi::ctypes::c_void) -> DWORD
             out(reg) pLocalPlayer,
         );
 
-        if pLocalPlayer != 0 {
-
-            *((pLocalPlayer + m_flMaxspeed) as *mut f32) = 7777f32;
-        }
-
+        if pLocalPlayer != 0 { *((pLocalPlayer+m_flMaxspeed) as *mut f32) = 7777f32; } 
         winapi::um::synchapi::Sleep(3000);
     }
     return 0;
 }
 
-#[no_mangle]
-pub extern "system" fn DllMain(instance: HINSTANCE, reason: DWORD, _reserved: LPVOID) -> BOOL {
-    if reason == 0x1 {
+pub extern "system" fn DllMain(instance: HINSTANCE, reason: DWORD, _: LPVOID) -> BOOL {
+    if reason == 1 {
         unsafe {
-            aGetLocalPlayer = GetModuleHandleA( b"server.dll\0".as_ptr().cast() ) as DWORD + 0x26D5F0;
-
+            aGetLocalPlayer = GetModuleHandleA( b"server.dll\0".as_ptr().cast() ) as DWORD+0x26D5F0;
             CreateThread(NULL(), 0, Some(StartRoutine), NULL(), 0, NULL());
         }
     }
     
-    return TRUE;
+    return 1;
 }
