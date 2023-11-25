@@ -9,13 +9,13 @@ section '.data' data readable writeable
 section '.code' code executable
 proc DllMain, hInstance, fdwReason, lpvReserved
     cmp [fdwReason], 0x1
-    jnz @thr
+    jnz @just_return_
     invoke getModuleHandle, ModuleName
     add eax, 0x26D5F0
     mov dword[GetLocalPlayer], eax
     invoke createThread, 0, 0, StartRoutine, 0, 0, 0
 
-    @thr:
+    @just_return_:
         mov eax,0x1
         ret
 endp
@@ -30,7 +30,7 @@ proc StartRoutine
         test eax,eax
         jz @sleepc
 
-        mov dword[eax+0xDAC], 0x45F30800; 7777.f
+        mov dword[eax+0xDAC], 0x45F30800; 7777.f(new speed value) as hex value (can use cvti2vss or other instruction for normal convertation)
 
         jmp @sleepc
 endp
